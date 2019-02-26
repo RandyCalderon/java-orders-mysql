@@ -11,9 +11,12 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Query(value = "SELECT * FROM customers WHERE custname = :name", nativeQuery = true)
     List<Customer> findByName(@Param("name") String name);
 
-    @Query(value = "SELECT custname, custcountry, grade, openingamt, outstandingamt, paymentamt, phone, receiveamt, ordnum, advanceamount,ordamount, orddescription FROM customers c, orders o WHERE o.custcode = c.custcode", nativeQuery = true)
+    @Query(value = "SELECT custname, ordnum, advanceamount,ordamount, orddescription, custcountry, grade, openingamt, outstandingamt, paymentamt, phone, receiveamt FROM customers c, orders o WHERE o.custcode = c.custcode", nativeQuery = true)
     List<Object[]> findCustomerOrders();
 
-    @Query(value = "SELECT c.custcode, o.ordnum FROM customers AS c INNER JOIN orders AS o WHERE c.custcode LIKE :id AND o.custcode LIKE :id", nativeQuery = true)
+    @Query(value = "", nativeQuery = true)
+    List<Object[]> findCustomerOrdersByName();
+
+    @Query(value = "SELECT c.custname, c.custcode, o.ordnum, o.ordamount, o.advanceamount FROM customers AS c INNER JOIN orders AS o WHERE c.custcode LIKE :id AND o.custcode LIKE :id", nativeQuery = true)
     List<Object[]> findCustomerOrderById(@Param("id") long id);
 }
