@@ -26,6 +26,8 @@ public class Order {
     @JsonIgnore
     private Customer customer;
 
+    private String orddescription;
+
     public Order() {
     }
 

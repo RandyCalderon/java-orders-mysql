@@ -1,6 +1,9 @@
 package com.lambdaschool.orders.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -11,21 +14,22 @@ public class Agent {
     @Column(nullable = false)
     private long agentcode;
 
-    private String agentname;
-
-    private String workingarea;
-
-    private double commission;
-
-    private String phone;
-
-    private String country;
-
     @OneToMany(mappedBy= "agent")
+    @JsonIgnore
     private Set<Customer> customers;
 
     @OneToMany(mappedBy="agent")
+    @JsonIgnore
     private Set<Order> orders;
+
+    @NotNull
+    private String agentname;
+
+    private String workingarea;
+    private double commission;
+    private String phone;
+    private String country;
+
 
     public Agent() {
     }
