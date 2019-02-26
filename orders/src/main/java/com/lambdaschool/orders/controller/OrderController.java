@@ -27,7 +27,7 @@ public class OrderController {
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
-    // List order by id
+    // Get order by id
     @GetMapping("/order/{id}")
     public ResponseEntity<?> orderById(@PathVariable long id) {
         Optional<Order> foundOrder = ordrepos.findById(id);
@@ -38,5 +38,5 @@ public class OrderController {
         }
     }
 
-    
+
  }
