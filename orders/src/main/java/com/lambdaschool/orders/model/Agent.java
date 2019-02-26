@@ -1,15 +1,14 @@
 package com.lambdaschool.orders.model;
 
-import lombok.Data;
-
 import javax.persistence.*;
+import java.util.Set;
 
-@Data
 @Entity
 @Table(name = "agents")
 public class Agent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private long agentcode;
 
     private String agentname;
@@ -22,6 +21,60 @@ public class Agent {
 
     private String country;
 
+    @OneToMany(mappedBy= "agent")
+    private Set<Customer> customers;
+
+    @OneToMany(mappedBy="agent")
+    private Set<Order> orders;
+
     public Agent() {
+    }
+
+    public long getAgentcode() {
+        return agentcode;
+    }
+
+    public void setAgentcode(long agentcode) {
+        this.agentcode = agentcode;
+    }
+
+    public String getAgentname() {
+        return agentname;
+    }
+
+    public void setAgentname(String agentname) {
+        this.agentname = agentname;
+    }
+
+    public String getWorkingarea() {
+        return workingarea;
+    }
+
+    public void setWorkingarea(String workingarea) {
+        this.workingarea = workingarea;
+    }
+
+    public double getCommission() {
+        return commission;
+    }
+
+    public void setCommission(double commission) {
+        this.commission = commission;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }
