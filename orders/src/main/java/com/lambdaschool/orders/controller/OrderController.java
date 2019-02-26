@@ -2,15 +2,15 @@ package com.lambdaschool.orders.controller;
 
 import com.lambdaschool.orders.model.Order;
 import com.lambdaschool.orders.repository.OrderRepository;
+import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,5 +38,25 @@ public class OrderController {
         }
     }
 
+    // Post Mapping by
+   @PostMapping()
+    public ResponseEntity<?> newOrder(@Valid @RequestBody Order order) {
+        Order newOrder = ordrepos.save(order);
+        return new ResponseEntity<>(newOrder, HttpStatus.CREATED);
+   }
+
+   // Put Mapping By
+
+   // Delete by Id
+   @DeleteMapping("/order/{id}")
+   public ResponseEntity<?> deleteOrderById(@PathVariable long id) {
+        Optional<Order> foundOrder = ordrepos.findById(id);
+        if (foundOrder.isPresent()) {
+            ordrepos.deleteById(id);
+            return new ResponseEntity<>(foundOrder, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+   }
 
  }

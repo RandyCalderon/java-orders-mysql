@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,4 +35,39 @@ public class CustomerController {
         }
     }
 
+    // Get customer by name
+    @GetMapping("/{name}")
+    public List<Customer> customerByName(@PathVariable String name) {
+        return custrepos.findByName(name);
+    }
+
+    // Get all customers orders
+    @GetMapping("/orders")
+    public List<Object[]> customerOrders() {
+        return custrepos.findCustomerOrders();
+    }
+
+    // Get customers orders by Id
+    @GetMapping("/orders/{id}")
+    public List<Object[]> customerOrdersById(@PathVariable long id) {
+
+        return custrepos.findCustomerOrderById(id);
+//        if (foundOrders != null) {
+//            return foundOrders;
+//        } else {
+//            return null;
+//        }
+    }
+
+    // Delete by id
+    @DeleteMapping("/customer/{id}")
+    public ResponseEntity<?> deleteCustomerById(@PathVariable long id) {
+        Optional<Customer> foundCustomer = custrepos.findById(id);
+        if (foundCustomer.isPresent()) {
+            custrepos.deleteById(id);
+            return new ResponseEntity<>(foundCustomer, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
 }

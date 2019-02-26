@@ -17,14 +17,14 @@ public class Order {
     private double advanceamount;
 
     @ManyToOne
-    @JoinColumn(name = "agentcode", nullable = false)
-    @JsonIgnore
-    private Agent agent;
-
-    @ManyToOne
-    @JoinColumn(name = "custcode", nullable = false)
+    @JoinColumn(name = "custcode")
     @JsonIgnore
     private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "agentcode")
+    @JsonIgnore
+    private Agent agent;
 
     private String orddescription;
 
@@ -53,5 +53,13 @@ public class Order {
 
     public void setAdvanceamount(double advanceamount) {
         this.advanceamount = advanceamount;
+    }
+
+    public String getOrddescription() {
+        return orddescription;
+    }
+
+    public void setOrddescription(String orddescription) {
+        this.orddescription = orddescription;
     }
 }
